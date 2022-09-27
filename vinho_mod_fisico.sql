@@ -60,3 +60,14 @@ INSERT INTO vinho VALUES(7,'Merlot', 'red' , '1986', 'Pure and floaty',6);
 
 SELECT * FROM vinicola;
 SELECT nomeVinho, tipoVinho, anoVinho FROM lojavinhos.vinho WHERE anoVinho <= 2020;
+
+SELECT nomeVinho, anoVinho, nomeVinicola, nomeRegiao
+	FROM vinho v
+	INNER JOIN vinicola vin ON v.codVinicola = vin.codVinicola
+    INNER JOIN regiao r ON vin.codRegiao = r.codRegiao;
+
+/**----------------------------------------CREATE USER---------------------------------------------**/
+DROP USER IF EXISTS 'Sommellier'@'Localhost';
+CREATE USER 'Sommellier'@'Localhost' IDENTIFIED BY '1234' WITH MAX_QUERIES_PER_HOUR 40;
+GRANT SELECT ON lojavinhos.vinho TO 'Sommellier'@'Localhost';
+GRANT SELECT (codVinicola, nomeVinicola) ON lojavinhos.vinicola TO 'Sommellier'@'Localhost';
